@@ -26,7 +26,7 @@ const shopSelect = document.getElementById('shop-select');
 const menu = document.getElementById('menu');
 
 function updateMenu(){
-    const selectedshop = shopSelect.ariaValueMax;
+    const selectedshop = shopSelect.value;
     const menus = shopMenus[selectedshop] || [] 
     menu.innerHTML = " ";
     
@@ -44,8 +44,19 @@ function updateMenu(){
         checkbox.value = item.id;
         checkbox.style.marginRight = '8px';
 
+        const textNode = document.createTextNode(item.name);
+
+        const kosuuinput = document.createElement('input');
+        kosuuinput.type = 'number';
+        kosuuinput.name = `kosuu_${item.id}`;
+        kosuuinput.min = '1';
+        kosuuinput.value = '1';
+        kosuuinput.style.width = '50px';
+        kosuuinput.style.marginLeft = '12px';
+
         label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(item.name));
+        label.appendChild(textNode);
+        label.appendChild(kosuuinput);
 
         menu.appendChild(label);
     });
