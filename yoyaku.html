@@ -16,11 +16,24 @@
                 <option value="yakisoba">焼きそば</option>
                 <option value="popcorn">ポップコーン</option>
                 <option value="hamburger">ハンバーガー</option>
+                <option value="takoyaki">たこ焼き</option>
             </select>
             
             <h3>メニュー選択</h3>
             <div id="menu">
-        
+            </div>
+
+            <div class="form-group">
+                <h3>受け取り時間枠選択</h3>
+                <select name="timeslot" id="time-slot-select" class="shop-select">
+                    <option value="1">10:00 - 10:30</option>
+                    <option value="2">10:30 - 11:00</option>
+                    <option value="3">11:30 - 12:00</option>
+                    <option value="4">12:30 - 13:00</option>
+                </select>
+                <div class="form-group">
+                    <button type="button" id="kakutei-btn" onclick="getData()">予約を確定する</button>
+                </div>
             </div>
         </form>
     </div>

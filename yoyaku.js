@@ -19,6 +19,11 @@ const shopMenus = {
         {id: 'hamburger', name:'ハンバーガー'},
         {id: 'cheese', name:'チーズバーガー'},
         {id: 'teriyaki', name:'てりやきバーガー'}
+    ],
+    takoyaki:[
+        {id: 'so-sumayo', name:'ソースマヨ'},
+        {id: 'mentaimayo', name:'明太マヨ'},
+        {id: 'ポン酢', name:'ポン酢'}
     ]
 };
 
@@ -64,3 +69,34 @@ function updateMenu(){
 
 shopSelect.addEventListener('change', updateMenu);
 updateMenu();
+
+function getData(){
+    const selectedShop = shopSelect.value;
+    const selectedtimeslot = document.getElementById('time-slot-select').value;
+
+    const selectedItems = [];
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+    checkboxes.forEach(check =>{
+        const itemid = check.value;
+        const inputid = `kosuu_${itemid}`;
+        const quantity = document.getElementById(inputid).value;
+
+        if(inputElement){
+            const quantity = inputElement.value;
+            selectedItems.push({
+                itemid:itemid,
+                quantity:Number(quantity)
+            });
+        }
+    });
+
+    const postdata = {
+        shop:selectedShop,
+        timeslot:Number(selectedtimeslot),
+        items:selectedItems
+    };
+
+    console.log("送信データ:", postdata);
+    return postdata
+}
