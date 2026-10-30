@@ -80,9 +80,8 @@ function getData(){
     checkboxes.forEach(check =>{
         const itemid = check.value;
         const inputid = `kosuu_${itemid}`;
-        const quantity = document.getElementById(inputid).value;
 
-        if(inputElement){
+        if(inputid){
             const quantity = inputElement.value;
             selectedItems.push({
                 itemid:itemid,
