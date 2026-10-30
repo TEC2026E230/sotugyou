@@ -22,3 +22,34 @@ const shopMenus = {
     ]
 };
 
+const shopSelect = document.getElementById('shop-select');
+const menu = document.getElementById('menu');
+
+function updateMenu(){
+    const selectedshop = shopSelect.ariaValueMax;
+    const menus = shopMenus[selectedshop] || [] 
+    menu.innerHTML = " ";
+    
+    if(menus.length === 0) return;
+
+    menus.forEach(item => {
+        const label = document.createElement('label');
+        label.className = 'menu-item-label';
+        label.style.display = 'block';
+        label.style.margin = '8px 0'
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'menu_ids[]';
+        checkbox.value = item.id;
+        checkbox.style.marginRight = '8px';
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(item.name));
+
+        menu.appendChild(label);
+    });
+}
+
+shopSelect.addEventListener('change', updateMenu);
+updateMenu();
