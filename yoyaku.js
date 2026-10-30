@@ -81,7 +81,9 @@ function getData(){
         const itemid = check.value;
         const inputid = `kosuu_${itemid}`;
 
-        if(inputid){
+        const inputElement = document.getElementById(inputid);
+
+        if(inputElement){
             const quantity = inputElement.value;
             selectedItems.push({
                 itemid:itemid,
