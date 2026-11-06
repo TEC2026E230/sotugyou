@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予約内容確認</title>
+    <link rel="stylesheet" href="yoyaku.css">
+</head>
+<body>
+    <h2 id="title">予約内容の確認</h2>
+    <div class="sentaku">
+        <h3>店舗</h3>
+        <p id="confirm-shop">-</p>
+
+        <h3>受取時間</h3>
+        <p id="confirm-timeslot">-</p>
+
+        <h3>ご注文商品</h3>
+        <ul id="confirm-items">
+
+        </ul>
+        <div>
+            <button type="button" id="fix-btn" onclick="back()">修正する</button>
+            <button type="button" id="submit-btn" onclick="submit()">この内容で確定する</button>
+        </div>
+    </div>
+    <script src="kakunin.js"></script>
+</body>
+</html>
