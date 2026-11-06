@@ -23,7 +23,7 @@ const shopMenus = {
     takoyaki:[
         {id: 'so-sumayo', name:'ソースマヨ'},
         {id: 'mentaimayo', name:'明太マヨ'},
-        {id: 'ポン酢', name:'ポン酢'}
+        {id: 'ponzu', name:'ポン酢'}
     ]
 };
 
@@ -53,6 +53,7 @@ function updateMenu(){
 
         const kosuuinput = document.createElement('input');
         kosuuinput.type = 'number';
+        kosuuinput.id = `kosuu_${item.id}`;
         kosuuinput.name = `kosuu_${item.id}`;
         kosuuinput.min = '1';
         kosuuinput.value = '1';
@@ -80,6 +81,7 @@ function getData(){
 
     const selectedItems = [];
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    console.log("見つかったチェックボックスの数:", checkboxes.length);
 
     if(selectedoption.disabled){
         alert("この時間枠はすでに受付終了しています。")
@@ -88,13 +90,17 @@ function getData(){
     checkboxes.forEach(check =>{
         const itemid = check.value;
         const inputid = `kosuu_${itemid}`;
-
         const inputElement = document.getElementById(inputid);
+        console.log("商品ID:", itemid, "数量要素:", inputElement);
 
         if(inputElement){
             const quantity = inputElement.value;
+            const menus = shopMenus[selectedShop];
+            const targetMenu = menus.find(m => m.id === itemid);
+            const itemname = targetMenu ? targetMenu.name : itemid;
             selectedItems.push({
                 itemid:itemid,
+                itemname:itemname,
                 quantity:Number(quantity)
             });
         }
@@ -160,5 +166,5 @@ function confirm(){
     };
 
     localStorage.setItem('reservation_temp', JSON.stringify(confirmData));
-    window.location.href = 'confirm.html';
+    window.location.href = 'kakunin.html';
 }
