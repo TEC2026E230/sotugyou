@@ -87,6 +87,10 @@ function getData(){
         alert("この時間枠はすでに受付終了しています。")
         return null;
     }
+    if(checkboxes.length == 0){
+        alert("メニューを1つ以上選択してください");
+        return null;
+    }
     checkboxes.forEach(check =>{
         const itemid = check.value;
         const inputid = `kosuu_${itemid}`;

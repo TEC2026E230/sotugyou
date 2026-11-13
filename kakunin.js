@@ -41,3 +41,7 @@ function submit(){
     alert("予約が確定しました");
     //window.location.href = 'qr.html';
 }
+
+function back(){
+    window.location.href = 'yoyaku.html';
+}
