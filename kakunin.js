@@ -44,5 +44,5 @@ function submit(){
 }
 
 function back(){
-    window.location.href = 'yoyaku.html';
+    window.location.href = './yoyaku.html';
 }
