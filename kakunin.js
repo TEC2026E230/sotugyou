@@ -40,7 +40,7 @@ function submit(){
 
     alert("予約が確定しました");
     //window.location.href = 'qr.html';
-    window.location.href = 'yoyaku.html';
+    window.location.href = './rireki.html';
 }
 
 function back(){
