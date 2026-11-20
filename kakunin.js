@@ -14,11 +14,24 @@ window.addEventListener('DOMContentLoaded', () =>{
     const itemsUl = document.getElementById('confirm-items');
     itemsUl.innerHTML = " ";
 
+    let calculatedTotal = 0;
+
     confirmData.rawData.items.forEach(item => {
+        const price = Number(item.price) || 0;
+        const quantity = Number(item.quantity) || 0;
+        const subtotal = price * quantity;
+        calculatedTotal += subtotal;
+
         const li = document.createElement('li');
-        li.textContent = `商品名: ${item.itemname} × ${item.quantity}個`;
+        li.textContent = `商品名: ${item.itemname} × ${item.quantity}個  ${item.quantity* item.price}円`;
         itemsUl.appendChild(li);
     });
+
+    const totalEl = document.getElementById('confirm-total');
+    if(totalEl){
+        const total = confirmData.rawData.totalPrice ?? calculatedTotal;
+        totalEl.textContent = Number(total).toLocaleString();
+    }
 });
 
 function submit(){

@@ -8,28 +8,29 @@
 
 const shopMenus = {
     yakisoba:[
-        {id: 'so-su', name:'ソース焼きそば'},
-        {id: 'sio', name:'塩焼きそば'}
+        {id: 'so-su', name:'ソース焼きそば',price:300},
+        {id: 'sio', name:'塩焼きそば',price:300}
     ],
     popcorn:[
-        {id: 'siopop', name:'塩ポップコーン'},
-        {id: 'caramel', name:'キャラメルポップコーン'}
+        {id: 'siopop', name:'塩ポップコーン',price:200},
+        {id: 'caramel', name:'キャラメルポップコーン',prce:200}
     ],
     hamburger:[
-        {id: 'hamburger', name:'ハンバーガー'},
-        {id: 'cheese', name:'チーズバーガー'},
-        {id: 'teriyaki', name:'てりやきバーガー'}
+        {id: 'hamburger', name:'ハンバーガー',price:200},
+        {id: 'cheese', name:'チーズバーガー',price:300},
+        {id: 'teriyaki', name:'てりやきバーガー',price:300}
     ],
     takoyaki:[
-        {id: 'so-sumayo', name:'ソースマヨ'},
-        {id: 'mentaimayo', name:'明太マヨ'},
-        {id: 'ponzu', name:'ポン酢'}
+        {id: 'so-sumayo', name:'ソースマヨ',price:200},
+        {id: 'mentaimayo', name:'明太マヨ',price:200},
+        {id: 'ponzu', name:'ポン酢',price:200}
     ]
 };
 
 const shopSelect = document.getElementById('shop-select');
 const menu = document.getElementById('menu');
 
+let maxLimit = Number(localStorage.getItem('maxReservationLimit')) || 10;
 function updateMenu(){
     const selectedshop = shopSelect.value;
     const menus = shopMenus[selectedshop] || [] 
@@ -48,17 +49,22 @@ function updateMenu(){
         checkbox.name = 'menu_ids[]';
         checkbox.value = item.id;
         checkbox.style.marginRight = '8px';
+        checkbox.addEventListener('change', updateTotalPrice);
 
-        const textNode = document.createTextNode(item.name);
-
+        const priceText = item.price ? `　${item.price}` : '';
+        const textNode = document.createTextNode(`${item.name}${priceText}円`);
         const kosuuinput = document.createElement('input');
         kosuuinput.type = 'number';
         kosuuinput.id = `kosuu_${item.id}`;
         kosuuinput.name = `kosuu_${item.id}`;
         kosuuinput.min = '1';
+        kosuuinput.max = String(maxLimit);
         kosuuinput.value = '1';
         kosuuinput.style.width = '50px';
         kosuuinput.style.marginLeft = '12px';
+
+        kosuuinput.addEventListener('input', updateTotalPrice);
+        kosuuinput.addEventListener('change', updateTotalPrice);
 
         label.appendChild(checkbox);
         label.appendChild(textNode);
@@ -74,6 +80,8 @@ updateMenu();
 
 
 function getData(){
+    let hasError = false;
+    let totalPrice = 0;
     const timeselect = document.getElementById('time-slot-select');
     const selectedoption = timeselect.options[timeselect.selectedIndex];
     const selectedShop = shopSelect.value;
@@ -92,28 +100,43 @@ function getData(){
         return null;
     }
     checkboxes.forEach(check =>{
+        if(hasError) return;
         const itemid = check.value;
         const inputid = `kosuu_${itemid}`;
         const inputElement = document.getElementById(inputid);
         console.log("商品ID:", itemid, "数量要素:", inputElement);
-
+      
         if(inputElement){
-            const quantity = inputElement.value;
+            const quantity = Number(inputElement.value);
             const menus = shopMenus[selectedShop];
             const targetMenu = menus.find(m => m.id === itemid);
             const itemname = targetMenu ? targetMenu.name : itemid;
+            const price = targetMenu ? targetMenu.price : 0;
+
+            totalPrice += price * quantity;
+
+            if(quantity < 1 || quantity > maxLimit){
+                alert(`1商品あたりの予約は1～${maxLimit}個までです。`)
+                hasError = true;
+                return;
+            }
             selectedItems.push({
                 itemid:itemid,
                 itemname:itemname,
+                price: price,
                 quantity:Number(quantity)
             });
         }
     });
+    if(hasError){
+        return null;
+    }
 
     const postdata = {
         shop:selectedShop,
         timeslot:Number(selectedtimeslot),
-        items:selectedItems
+        items:selectedItems,
+        totalPrice: totalPrice
     };
 
 
@@ -171,4 +194,30 @@ function confirm(){
 
     localStorage.setItem('reservation_temp', JSON.stringify(confirmData));
     window.location.href = 'kakunin.html';
+}
+
+function updateTotalPrice(){
+    const totalEl = document.getElementById('total-price');
+    if(!totalEl) return;
+
+    const selectedShop = shopSelect.value;
+    const menus = shopMenus[selectedShop] || [];
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+    let total = 0;
+
+    checkboxes.forEach(check =>{
+        const itemid = check.value;
+        const inputElement = document.getElementById(`kosuu_${itemid}`);
+        const targetMenu = menus.find(m => m.id === itemid);
+
+        if(inputElement && targetMenu){
+            const quantity = Math.max(0, Number(inputElement.value) || 0);
+            const price = Number(targetMenu.price) || 0;
+            total += price * quantity;
+
+        }
+    });
+
+    totalEl.textContent = total.toLocaleString();
 }
