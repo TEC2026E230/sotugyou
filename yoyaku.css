@@ -1,15 +1,24 @@
 #title{
     text-align: center;
+    font-size: 40px;
 }
 .sentaku{
     padding-top: 10px;
     text-align: center;
 }
 .shop-select{
-    font-size: 20px;
+    font-size: 30px;
     padding: 10px 20px;
     cursor: pointer;
 
     border-radius: 8px;
     border: 1px solid #ccc;
+}
+#menu{
+    font-size: 20px;
+}
+#kakutei-btn{
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
 }
