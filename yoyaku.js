@@ -13,7 +13,7 @@ const shopMenus = {
     ],
     popcorn:[
         {id: 'siopop', name:'塩ポップコーン',price:200},
-        {id: 'caramel', name:'キャラメルポップコーン',prce:200}
+        {id: 'caramel', name:'キャラメルポップコーン',price:200}
     ],
     hamburger:[
         {id: 'hamburger', name:'ハンバーガー',price:200},
