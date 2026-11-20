@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>予約内容確認</title>
-    <link rel="stylesheet" href="yoyaku.css">
+    <link rel="stylesheet" href="kakunin.css">
 </head>
 <body>
     <h1 id="title">予約内容の確認</h1>
     <div class="sentaku">
-        <h3>店舗</h3>
+        <h3 class="subti">店舗</h3>
         <p id="confirm-shop">-</p>
 
-        <h3>受取時間</h3>
+        <h3 class="subti">受取時間</h3>
         <p id="confirm-timeslot">-</p>
 
-        <h3>ご注文商品</h3>
+        <h3 class="subti">ご注文商品</h3>
         <ul id="confirm-items">
 
         </ul>
-        <div>
+        <div class="btn-group">
             <button type="button" id="fix-btn" onclick="back()">修正する</button>
             <button type="button" id="submit-btn" onclick="submit()">この内容で確定する</button>
         </div>
