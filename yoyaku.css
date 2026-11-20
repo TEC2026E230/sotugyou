@@ -20,8 +20,7 @@
 #kakutei-btn{
     padding: 10px;
     font-size: 15px;
-    font-weight: 700;
-    background-color: aquamarine;
-    -webkit-appearance: none;
-    appearance: none;
+    font-weight: 700;  
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
